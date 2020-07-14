@@ -1,5 +1,5 @@
 //Registramos el service worker
-var url = windows.location.href;
+var url = window.location.href;
 var swLocation = '/twittor/sw.js';
 if (navigator.serviceworker) {
     if (url.includes('localhost')) {
