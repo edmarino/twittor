@@ -1,6 +1,6 @@
 //sw.js
 
-//imports
+// imports
 importScripts('js/sw-utils.js');
 
 
@@ -10,7 +10,7 @@ const INMUTABLE_CACHE = 'inmutable-v1';
 
 
 const APP_SHELL = [
-    //'/', requrido para localhost, en github NO
+    // '/', requrido para localhost, en github NO
     'index.html',
     'css/style.css',
     'img/favicon.ico',
@@ -34,62 +34,30 @@ const APP_SHELL_INMUTABLE = [
 //Instalación: Carga los caches
 
 self.addEventListener('install', e => {
-    const cacheStatic = caches.open(STATIC_CACHE).then(cache => {
-        cache.addAll(APP_SHELL);
-    }); //const cacheStatic=caches.open(STATIC_CACHE).then(cache=>{});
-    const cacheInmutable = caches.open(INMUTABLE_CACHE).then(cache => {
-        cache.addAll(APP_SHELL_INMUTABLE);
-    }); //const cacheInmutable=caches.open(INMUTABLE_CACHE).then(cache=>{
+    const cacheStatic = caches.open( STATIC_CACHE ).then(cache => 
+        cache.addAll( APP_SHELL ));
+    //const cacheStatic=caches.open(STATIC_CACHE).then(cache=>{});
 
+    const cacheInmutable = caches.open(INMUTABLE_CACHE).then(cache =>
+        cache.addAll(APP_SHELL_INMUTABLE));
+	//const cacheInmutable=caches.open(INMUTABLE_CACHE).then(cache=>{
     e.waitUntil(Promise.all([cacheStatic, cacheInmutable]));
 }); //self.addEventListener('install',e=>{});		
 
+
+
 //Activación y borrado de caches innecesarios
-								   
-
-																		
-											 
-
-
-
-																 
-
-   
-
-
 self.addEventListener('activate', e => {
     const respuesta = caches.keys().then(keys => {
         //static
-        if (key !== STATIC_CACHE && key.includes('static')) {
-            return caches.delete(key);
+		keys.forEach( key => {
+			if (key !== STATIC_CACHE && key.includes('static')) {
+				return caches.delete(key);
         } //if(key!==CACHE_STATIC_NAME&&key.includes('static')){
     }); //const respuesta=caches.keys().then(keys=>{
 }); //self.addEventListener('activate',e=>{
 
 //Estrategia del fetch
-
-							  
-
-																	
-										  
-			 
-
-																	  
-										  
-			 
-
-		   
-
-	   
-
-							 
-
-   
-
-
-
-
-self.addEventListener('fetch', e => {
 
 
     const respuesta = caches.match(e.request).then(res => {

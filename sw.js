@@ -1,4 +1,4 @@
-	   
+//sw.js
 
 // imports
 importScripts('js/sw-utils.js');
@@ -31,48 +31,29 @@ const APP_SHELL_INMUTABLE = [
     'js/libs/jquery.js'
 ];
 
-
+//Instalación: Carga los caches
 
 self.addEventListener('install', e => {
-																 
-								
-																	  
-																	   
-										  
-																		 
-
-															
-											   
-
     const cacheStatic = caches.open( STATIC_CACHE ).then(cache => 
         cache.addAll( APP_SHELL ));
+    //const cacheStatic=caches.open(STATIC_CACHE).then(cache=>{});
 
     const cacheInmutable = caches.open( INMUTABLE_CACHE ).then(cache => 
         cache.addAll( APP_SHELL_INMUTABLE ));
-
-
-
+	//const cacheInmutable=caches.open(INMUTABLE_CACHE).then(cache=>{
     e.waitUntil( Promise.all([ cacheStatic, cacheInmutable ])  );
+}); //self.addEventListener('install',e=>{});		
 
-});
 
 
+//Activación y borrado de caches innecesarios
 self.addEventListener('activate', e => {
-												  
-				
-															 
-									  
-																
-													
-										   
-
     const respuesta = caches.keys().then( keys => {
-
+		//static
         keys.forEach( key => {
-
             if (  key !== STATIC_CACHE && key.includes('static') ) {
                 return caches.delete(key);
-            }
+            } //if(key!==CACHE_STATIC_NAME&&key.includes('static')){
 
             if (  key !== DYNAMIC_CACHE && key.includes('dynamic') ) {
                 return caches.delete(key);
