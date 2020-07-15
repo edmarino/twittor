@@ -1,12 +1,12 @@
 //Registramos el service worker
 var url = window.location.href;
 var swLocation = '/twittor/sw.js';
-if (navigator.serviceworker) {
+if (navigator.serviceWorker) {
     if (url.includes('localhost')) {
         swLocation = '/sw.js';
     }
 
-    navigator.serviceworker.register(swLocation);
+    navigator.serviceWorker.register(swLocation);
 }
 // Referencias de jQuery
 
@@ -33,7 +33,7 @@ var usuario;
 
 function crearMensajeHTML(mensaje, personaje) {
 
-    var content = `
+    var content =`
     <li class="animated fadeIn fast">
         <div class="avatar">
             <img src="img/avatars/${ personaje }.jpg">
